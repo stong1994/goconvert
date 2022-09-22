@@ -162,6 +162,9 @@ func cloneStruct(oldObj reflect.Value) reflect.Value {
 }
 
 func cloneField(oldField reflect.Value, newValField reflect.Value) {
+	if oldField.Kind() == reflect.Interface && oldField.IsNil() {
+		return
+	}
 	if newValField.CanSet() {
 		newValField.Set(getCloneField(oldField))
 	}

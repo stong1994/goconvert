@@ -32,6 +32,14 @@ type SliceContainInt struct {
 	List []*int
 }
 
+type ContainInterface struct {
+	Num interface{}
+}
+
+type ContainInterfaceSlice struct {
+	List []ContainInterface
+}
+
 func TestConvertNilSlice2Empty(t *testing.T) {
 	tests := []struct {
 		name  string
@@ -192,6 +200,13 @@ func TestConvertNilSlice2Empty(t *testing.T) {
 			args: SliceContainInt{List: []*int{nilOne}},
 			check: func(got interface{}) bool {
 				return got.(SliceContainInt).List[0] == nil
+			},
+		},
+		{
+			name: "contain nil interface",
+			args: ContainInterfaceSlice{List: []ContainInterface{{Num: nil}}},
+			check: func(got interface{}) bool {
+				return got.(ContainInterfaceSlice).List[0].Num == nil
 			},
 		},
 	}
