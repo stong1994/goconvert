@@ -209,6 +209,14 @@ func TestConvertNilSlice2Empty(t *testing.T) {
 				return got.(ContainInterfaceSlice).List[0].Num == nil
 			},
 		},
+		{
+			name: "map ptr",
+			args: &map[string]string{"abc": "def"},
+			check: func(got interface{}) bool {
+				data := got.(map[string]string)
+				return len(data) == 1 && data["abc"] == "def"
+			},
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {

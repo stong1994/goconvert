@@ -120,7 +120,11 @@ func newZeroIface(val reflect.Value) reflect.Value {
 func clonePtr(oldPtr reflect.Value) reflect.Value {
 	elem := oldPtr.Elem()
 	if elem.CanAddr() {
-		return convertEmpty(elem).Addr()
+		data := convertEmpty(elem)
+		if data.CanAddr() {
+			return data.Addr()
+		}
+		return data
 	}
 
 	return oldPtr
